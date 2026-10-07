@@ -1,6 +1,6 @@
 # Validação executada
 
-Verificações realizadas em 07/10/2026 com build de produção, dados originais de teste e cenário padrão do MSW. As medições são locais, não do CDN publicado. Esta revisão de documentação não representa nova execução da suíte ou do Lighthouse.
+Verificações realizadas em 07/10/2026 com build de produção, dados originais de teste e cenário padrão do MSW. As medições são locais, não do CDN publicado. As alterações posteriores receberam verificações focadas, descritas abaixo; não houve nova execução completa da suíte ou do Lighthouse.
 
 ## TypeScript, lint e E2E
 
@@ -17,6 +17,12 @@ Artefatos: `reports/e2e-final-full/index.html`, `reports/e2e-final-initial/index
 Depois da suíte completa/auditoria, a galeria recebeu textos em português, miniaturas horizontais no modal e lupa com fundo circular marrom. A coluna de miniaturas da página desktop foi preservada. `npm run check` passou; testes focados aprovaram quatro casos e ignoraram dois específicos do outro viewport, verificando troca de imagem, alinhamento, Escape, retorno de foco e Axe no modal.
 
 A atualização visual passou quatro casos; a comparação normal, sem atualizar snapshots, passou os dois casos visuais multipágina desktop/mobile. Evidências: `reports/e2e-gallery-final`, `reports/e2e-gallery-visual`, `reports/e2e-gallery-visual-confirmed`, `reports/gallery-1440.png`, `reports/gallery-390.png`.
+
+### Alinhamento do controle de senha
+
+O controle de exibir/ocultar senha passou a ser posicionado no container do input, separado da mensagem de erro. A confirmação de senha mobile usa a mesma composição. `npm run check` passou; a execução focada aprovou cinco casos e ignorou um exclusivo de mobile, cobrindo credenciais rejeitadas, centralização antes/depois do erro, exibição da senha, confirmação divergente, Axe e referências visuais existentes de login/cadastro, sem atualizar snapshots.
+
+Evidências: `reports/e2e-auth-alignment`, `reports/auth-error-1440.png`, `reports/auth-error-390.png` e `reports/auth-alignment-check.txt`.
 
 ## Lighthouse: última medição
 

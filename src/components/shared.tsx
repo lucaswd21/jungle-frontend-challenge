@@ -5,23 +5,38 @@ import { errorMessage } from "../api/client";
 export function Field({
   label,
   error,
+  endAdornment,
   ...props
-}: InputHTMLAttributes<HTMLInputElement> & { label: string; error?: string }) {
+}: InputHTMLAttributes<HTMLInputElement> & {
+  label: string;
+  error?: string;
+  endAdornment?: ReactNode;
+}) {
   const generated = useId();
   const id = props.id ?? generated;
+  const input = (
+    <input
+      {...props}
+      aria-label={props["aria-label"] ?? label}
+      id={id}
+      aria-invalid={!!error}
+      aria-describedby={error ? `${id}-error` : undefined}
+      className="input"
+    />
+  );
   return (
     <div className="space-y-2">
       <label htmlFor={id} className="block text-sm font-medium text-foreground">
         {label}
       </label>
-      <input
-        {...props}
-        aria-label={props["aria-label"] ?? label}
-        id={id}
-        aria-invalid={!!error}
-        aria-describedby={error ? `${id}-error` : undefined}
-        className="input"
-      />
+      {endAdornment ? (
+        <div className="relative">
+          {input}
+          {endAdornment}
+        </div>
+      ) : (
+        input
+      )}
       {error && (
         <p id={`${id}-error`} className="text-sm text-red-300">
           {error}

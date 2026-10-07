@@ -211,26 +211,30 @@ export function AuthDialog({
                   minLength={signup ? 8 : undefined}
                   required
                   error={errors.password}
-                />
-                <button
-                  type="button"
-                  className="password-toggle"
-                  aria-label={showPassword ? "Ocultar senha" : "Mostrar senha"}
-                  aria-pressed={showPassword}
-                  onClick={() => setShowPassword((visible) => !visible)}
-                >
-                  {showPassword ? (
-                    <svg
-                      viewBox="0 0 24 24"
-                      aria-hidden="true"
-                      focusable="false"
+                  endAdornment={
+                    <button
+                      type="button"
+                      className="password-toggle"
+                      aria-label={
+                        showPassword ? "Ocultar senha" : "Mostrar senha"
+                      }
+                      aria-pressed={showPassword}
+                      onClick={() => setShowPassword((visible) => !visible)}
                     >
-                      <path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Zm9.5-3a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z" />
-                    </svg>
-                  ) : (
-                    <AccountIcon name="password-hidden" />
-                  )}
-                </button>
+                      {showPassword ? (
+                        <svg
+                          viewBox="0 0 24 24"
+                          aria-hidden="true"
+                          focusable="false"
+                        >
+                          <path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Zm9.5-3a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z" />
+                        </svg>
+                      ) : (
+                        <AccountIcon name="password-hidden" />
+                      )}
+                    </button>
+                  }
+                />
               </div>
               {signup && (
                 <div className={mobile ? "auth-password-field" : undefined}>
@@ -247,28 +251,30 @@ export function AuthDialog({
                         : undefined
                     }
                     onChange={(e) => setConfirmation(e.target.value)}
+                    endAdornment={
+                      mobile && (
+                        <button
+                          type="button"
+                          className="password-toggle"
+                          aria-label={
+                            showConfirmation
+                              ? "Ocultar confirmação de senha"
+                              : "Mostrar confirmação de senha"
+                          }
+                          aria-pressed={showConfirmation}
+                          onClick={() => setShowConfirmation(!showConfirmation)}
+                        >
+                          {showConfirmation ? (
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                              <path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Zm9.5-3a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z" />
+                            </svg>
+                          ) : (
+                            <AccountIcon name="password-hidden" />
+                          )}
+                        </button>
+                      )
+                    }
                   />
-                  {mobile && (
-                    <button
-                      type="button"
-                      className="password-toggle"
-                      aria-label={
-                        showConfirmation
-                          ? "Ocultar confirmação de senha"
-                          : "Mostrar confirmação de senha"
-                      }
-                      aria-pressed={showConfirmation}
-                      onClick={() => setShowConfirmation(!showConfirmation)}
-                    >
-                      {showConfirmation ? (
-                        <svg viewBox="0 0 24 24" aria-hidden="true">
-                          <path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Zm9.5-3a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z" />
-                        </svg>
-                      ) : (
-                        <AccountIcon name="password-hidden" />
-                      )}
-                    </button>
-                  )}
                 </div>
               )}
               {!signup && (
