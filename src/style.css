@@ -1,0 +1,6 @@
+@import "tailwindcss";
+@import "./styles/base.css";
+@import "./styles/market.css";
+@import "./styles/pages.css";
+@import "./styles/detail.css";
+@import "./styles/cart.css";

@@ -1,0 +1,447 @@
+/* Compact desktop product composition from the supplied detail reference. */
+.nft-information-tabs {
+  display: flex;
+  gap: 32px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 16px;
+}
+.nft-information-tabs button {
+  padding: 0 0 10px;
+  font-size: 14px;
+}
+.nft-information-tabs button[aria-pressed="true"] {
+  color: var(--accent);
+  border-bottom: 2px solid var(--primary);
+}
+.gallery-zoom {
+  position: absolute;
+  right: 14px;
+  top: 14px;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--color-surface-raised);
+  color: var(--foreground);
+}
+.gallery-main {
+  position: relative;
+}
+@media (min-width: 768px) {
+  .detail-back {
+    font-weight: 700;
+    font-size: 14px;
+    margin-bottom: 10px;
+    color: var(--foreground);
+  }
+  .detail-layout {
+    grid-template-columns: minmax(0, 572px) minmax(0, 1fr);
+    gap: 32px;
+  }
+  .artwork-gallery {
+    grid-template-columns: 100px minmax(0, 444px);
+    gap: 28px;
+  }
+  .gallery-main {
+    background: var(--surface-card);
+    padding: 20px;
+    border-radius: 4px;
+  }
+  .gallery-main img {
+    border-radius: 24px;
+  }
+  .gallery-thumbnails {
+    gap: 16px;
+  }
+  .gallery-thumbnails button {
+    width: 100px;
+    height: 100px;
+    border: 0;
+    border-radius: 4px;
+  }
+  .gallery-thumbnails button[aria-pressed="true"] {
+    outline: 1px solid var(--primary);
+    outline-offset: 2px;
+  }
+  .gallery-thumbnails img {
+    height: 100%;
+    object-fit: cover;
+    border-radius: 4px;
+  }
+  .artwork-gallery > p,
+  .detail-copy > .mb-5,
+  .detail-copy > p.mt-4 {
+    display: none;
+  }
+  .detail-title {
+    font-size: 26px;
+    line-height: 34px;
+    margin: 0 0 8px;
+  }
+  .detail-price-rating {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  .detail-price-rating > p {
+    color: var(--accent);
+    font-size: 22px;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  .detail-price-rating button {
+    font-size: 13px;
+    text-align: right;
+  }
+  .detail-price-rating button span {
+    color: var(--primary);
+  }
+  .detail-about {
+    font-size: 14px;
+    font-weight: 700;
+    margin: 12px 0 6px;
+  }
+  .detail-copy > p.my-7 {
+    margin: 0 0 8px;
+    font-size: 14px;
+    line-height: 24px;
+  }
+  .detail-purchase {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    border: 0;
+    padding: 0;
+  }
+  .detail-purchase > * {
+    margin: 0;
+  }
+  .detail-purchase > div:first-child {
+    display: none;
+  }
+  .edition-options {
+    order: 0;
+  }
+  .edition-options legend {
+    font-size: 14px;
+    margin-bottom: 4px;
+  }
+  .edition-options > div {
+    gap: 6px;
+  }
+  .edition-options button {
+    padding: 2px 6px;
+    font-size: 12px;
+    line-height: 18px;
+  }
+  .detail-transaction {
+    order: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .quantity-row {
+    gap: 8px;
+  }
+  .detail-purchase .quantity-row > .space-y-2 {
+    width: 28px;
+    margin: 0;
+    display: block;
+  }
+  .quantity-row label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+  .detail-purchase .quantity-row .input {
+    width: 28px;
+    min-height: 40px;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    background: none;
+    text-align: center;
+    appearance: textfield;
+  }
+  .quantity-row .input::-webkit-inner-spin-button {
+    appearance: none;
+  }
+  .quantity-row > button {
+    width: 30px;
+    height: 48px;
+    border-radius: 16px;
+    background: var(--primary);
+    color: var(--background);
+  }
+  .detail-actions {
+    display: flex;
+    gap: 8px;
+  }
+  .detail-actions > .inline-flex {
+    height: 40px;
+    min-height: 40px;
+    padding: 0 12px;
+    font-size: 13px;
+    margin: 0;
+    border-radius: 4px;
+  }
+  .detail-actions > button:first-child {
+    min-width: 130px;
+  }
+  .detail-actions > button:first-child svg,
+  .detail-cart-link {
+    display: none;
+  }
+  .detail-favorite {
+    color: var(--accent);
+    border-color: var(--primary);
+  }
+  .detail-favorite svg {
+    width: 16px;
+    height: 16px;
+  }
+  .detail-purchase .edition-metadata {
+    order: 2;
+    display: grid;
+    gap: 6px;
+    color: var(--secondary);
+    font-size: 14px;
+    line-height: 24px;
+  }
+  .edition-availability {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+  .detail-share {
+    order: 4;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .detail-share a,
+  .detail-share button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 24px;
+    min-height: 24px;
+  }
+  .nft-description {
+    margin-top: 96px;
+    font-size: 14px;
+    line-height: 24px;
+  }
+  .nft-description h3 {
+    font-size: 14px;
+    margin: 12px 0 0;
+  }
+  .nft-description p + p {
+    margin-top: 20px;
+  }
+}
+@media (min-width: 768px) and (max-width: 1100px) {
+  .detail-layout {
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+  }
+  .artwork-gallery {
+    grid-template-columns: 70px minmax(0, 1fr);
+    gap: 16px;
+  }
+  .gallery-thumbnails button {
+    width: 70px;
+    height: 70px;
+  }
+  .gallery-main {
+    padding: 12px;
+  }
+  .detail-price-rating {
+    flex-wrap: wrap;
+  }
+}
+
+/* Mobile detail: artwork above the collector sheet and compact purchase row. */
+@media (max-width: 767px) {
+  .market-main:has(.detail-layout) {
+    padding-top: 32px;
+    padding-bottom: calc(192px + env(safe-area-inset-bottom, 0px));
+  }
+  .market-main:has(.detail-layout) > .detail-back {
+    margin-left: 24px;
+    margin-bottom: 10px;
+  }
+  .detail-back {
+    width: 40px;
+    height: 40px;
+    border: 0;
+    background: var(--surface-dark);
+    color: var(--secondary);
+    padding: 0;
+    line-height: 1;
+  }
+  .detail-back::before {
+    content: none;
+  }
+  .detail-layout .artwork-gallery {
+    padding: 0 24px;
+  }
+  .detail-copy {
+    z-index: 1;
+    padding: 32px 24px 24px;
+  }
+  .detail-copy > .mb-5 {
+    right: 24px;
+    top: -50px;
+  }
+  .detail-copy > .mb-5 > .detail-favorite {
+    width: 40px;
+    height: 40px;
+    min-height: 40px;
+    border: 0;
+    background: var(--surface-dark);
+    color: var(--secondary);
+  }
+  .detail-favorite svg {
+    width: 20px;
+    height: 20px;
+    stroke-width: 1.25;
+  }
+  .detail-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  .detail-heading .detail-title {
+    min-width: 0;
+    font-size: clamp(16px, 4.8vw, 20px);
+    line-height: 28px;
+  }
+  .detail-rating {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    flex-shrink: 0;
+    padding: 2px 5px;
+    border: 1px solid var(--primary);
+    border-radius: 14px;
+    color: var(--foreground);
+    font-size: 12px;
+    line-height: 20px;
+  }
+  .detail-rating > span:first-child {
+    color: var(--accent);
+  }
+  .detail-copy > p.my-7 {
+    margin: 12px 0;
+    font-size: 14px;
+    line-height: 24px;
+  }
+  .detail-purchase .edition-options button {
+    padding: 0 6px;
+    font-size: 13px;
+    line-height: 20px;
+    border-color: var(--border-soft);
+    background: transparent;
+  }
+  .detail-purchase .edition-options button[aria-pressed="true"] {
+    border-color: var(--primary);
+  }
+  .detail-purchase .edition-options > div {
+    gap: 4px;
+  }
+  .detail-transaction {
+    position: fixed;
+    z-index: 30;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: 0;
+    padding: 24px 24px calc(28px + env(safe-area-inset-bottom, 0px));
+    border-radius: 32px 32px 0 0;
+    max-height: 50dvh;
+    overflow-y: auto;
+  }
+  .detail-purchase .detail-actions > button {
+    width: 196px;
+    max-width: calc(100% - 72px);
+    border-radius: 32px;
+    background: linear-gradient(110deg, var(--primary), #b77e48);
+  }
+  .detail-purchase .detail-cart-link {
+    border: 0;
+    background: var(--surface-dark);
+    border-radius: 50%;
+  }
+  .detail-purchase .quantity-row .input {
+    min-height: 28px;
+    font-size: 14px;
+  }
+  .detail-purchase .quantity-row > button {
+    width: 18px;
+    height: 28px;
+    min-height: 28px;
+    border-radius: 12px;
+    background: var(--primary);
+    color: var(--background);
+  }
+  .detail-purchase .quantity-row > button:disabled {
+    opacity: 1;
+  }
+  .mobile-edition-price {
+    font-size: 18px;
+    line-height: 28px;
+  }
+  .detail-purchase .edition-availability {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    margin: 0;
+  }
+}
+@media (max-width: 767px) {
+  #root:has(.detail-layout) .compact-demo {
+    padding-bottom: calc(192px + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+@media (max-width: 767px) {
+  .detail-transaction {
+    box-shadow: 0 -6px 20px rgb(0 0 0 / 22%);
+  }
+}
+
+/* The enlarged viewer has its own horizontal strip; the desktop page keeps
+   the reference's vertical previews beside the artwork. */
+.gallery-dialog-previews .gallery-thumbnails {
+  flex-direction: row;
+  gap: 12px;
+  margin-top: 16px;
+  padding: 3px;
+  overflow-x: auto;
+}
+.gallery-dialog-previews .gallery-thumbnails button {
+  flex: 0 0 72px;
+  width: 72px;
+  height: 72px;
+}
+.gallery-dialog-previews .gallery-thumbnails img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}

@@ -1,0 +1,811 @@
+/* Figma: Kurio — font/family Roboto Mono, original color variables. */
+:root {
+  --accent: #e89b55;
+  --text-secondary: #cfb28c;
+  --surface-card: #241612;
+  --surface-raised: #2f1d15;
+  --surface-dark: #38220f;
+  --border-soft: #55321f;
+}
+.figma-icon {
+  display: block;
+  flex: none;
+  max-width: none;
+}
+.site-header,
+.site-main,
+.market-footer {
+  width: calc(100% - 64px);
+  max-width: 1200px;
+  margin-inline: auto;
+}
+.site-header {
+  padding-top: 24px;
+}
+.header-row {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 24px;
+  min-height: 45px;
+  border-bottom: 1px solid var(--border);
+}
+.market-header .header-row {
+  border-bottom: 0;
+}
+.wordmark {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  padding-top: 8px;
+  min-width: 160px;
+}
+.desktop-nav {
+  display: flex;
+  align-items: start;
+  gap: 40px;
+  font-size: 16px;
+}
+.desktop-nav a {
+  padding: 0 0 22px;
+}
+.desktop-nav .selected {
+  color: var(--accent);
+  font-weight: 700;
+  border-bottom: 3px solid var(--primary);
+}
+.header-actions {
+  display: flex;
+  gap: 28px;
+  align-items: center;
+}
+.header-actions > a {
+  min-height: 32px;
+  display: flex;
+  align-items: center;
+}
+.header-cart {
+  position: relative;
+}
+.header-cart span {
+  position: absolute;
+  top: 0;
+  right: -8px;
+  font-size: 10px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: var(--background);
+  min-width: 12px;
+  text-align: center;
+}
+.session-button {
+  min-height: 28px;
+  padding: 4px 8px;
+  font-size: 14px;
+  gap: 4px;
+}
+.session-button .figma-icon {
+  width: 20px;
+  height: 20px;
+}
+.mobile-menu {
+  display: none;
+}
+.site-main {
+  padding-top: 32px;
+  outline: none;
+  min-height: 65vh;
+}
+.market-hero {
+  position: relative;
+  min-height: 450px;
+  display: grid;
+  grid-template-columns: 1fr 450px;
+  align-items: center;
+  padding-left: 40px;
+  gap: 20px;
+}
+.hero-copy > p:first-child {
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 1.4px;
+}
+.hero-copy h1 {
+  font-size: 43px;
+  font-weight: 700;
+  line-height: 70px;
+  margin: 8px 0 4px;
+}
+.hero-description {
+  max-width: 557px;
+  font-size: 14px;
+  line-height: 24px;
+  color: var(--text-secondary);
+  margin-bottom: 32px;
+}
+.hero-copy .inline-flex {
+  min-height: 40px;
+  padding: 8px 28px;
+}
+.hero-art img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 24px;
+}
+.hero-dots {
+  color: var(--accent);
+  font-size: 12px;
+  position: absolute;
+  bottom: 43px;
+  left: 600px;
+}
+.catalog-layout {
+  display: grid;
+  grid-template-columns: 310px 1fr;
+  gap: 48px;
+  margin-top: 96px;
+}
+.filter-card {
+  background: var(--surface-card);
+  padding: 20px;
+  font-size: 15px;
+}
+.filter-card h2 {
+  font-weight: 700;
+  font-size: 18px;
+  margin-bottom: 16px;
+}
+.filter-card label {
+  color: var(--text-secondary);
+}
+.filter-card .space-y-2 {
+  margin-top: 24px;
+}
+.collection-links {
+  display: grid;
+  padding-inline: 12px;
+  margin-top: 12px;
+}
+.collection-links button {
+  display: flex;
+  justify-content: space-between;
+  text-align: left;
+  padding: 10px 0;
+  color: var(--text-secondary);
+}
+.collection-links button[aria-pressed="true"] {
+  color: var(--accent);
+}
+.filter-help {
+  color: var(--text-secondary);
+  font-size: 12px;
+  line-height: 22px;
+  margin-top: 24px;
+}
+.featured-banner {
+  text-align: center;
+  margin-top: 24px;
+  padding-top: 24px;
+  background: linear-gradient(135deg, var(--surface-dark), var(--surface-card));
+  overflow: hidden;
+}
+.featured-banner h3 {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 16px;
+}
+.featured-banner p {
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+.featured-banner img {
+  width: 100%;
+  object-fit: cover;
+}
+.catalog-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+.market-tabs {
+  display: flex;
+  gap: 20px;
+  font-size: 16px;
+  white-space: nowrap;
+}
+@media (min-width: 641px) and (max-width: 1100px) {
+  .catalog-toolbar {
+    flex-wrap: wrap;
+  }
+}
+.market-tabs button[aria-pressed="true"] {
+  color: var(--accent);
+  padding-bottom: 7px;
+  border-bottom: 1px solid var(--primary);
+}
+.catalog-toolbar .space-y-2 {
+  max-width: none;
+  flex: none;
+}
+.catalog-toolbar label {
+  font-size: 14px;
+  line-height: 20px;
+  margin: 0;
+}
+.header-search .figma-icon,
+.header-actions .account-link[href="/profile"] .figma-icon {
+  filter: brightness(0) invert(1);
+}
+.catalog-toolbar .input {
+  font-size: 14px;
+  width: 210px;
+  line-height: 20px;
+  min-height: 28px;
+  padding: 4px 0;
+  border: 0;
+  background: none;
+}
+.result-count {
+  font-size: 11px;
+  color: var(--text-secondary);
+  margin: 8px 0 20px;
+}
+.nft-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 72px 34px;
+}
+.nft-card-image {
+  height: 300px;
+  background: var(--surface-card);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+}
+.nft-card-image img {
+  width: 100%;
+  max-height: 286px;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 15px;
+}
+.nft-card h3 {
+  font-size: 15px;
+  line-height: 20px;
+  font-weight: 500;
+  margin-top: 12px;
+}
+.nft-price {
+  color: var(--accent);
+  font-size: 15px;
+  line-height: 20px;
+  font-weight: 700;
+  margin-top: 6px;
+}
+.catalog-pagination {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+  margin-top: 72px;
+  font-size: 12px;
+}
+.promo-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  margin-top: 96px;
+}
+.promo-card {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: var(--surface-card);
+  min-height: 250px;
+  text-align: right;
+  overflow: hidden;
+}
+.promo-card > img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+}
+.promo-card > div {
+  padding: 35px 30px 25px 8px;
+}
+.promo-card h2 {
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 700;
+}
+.promo-card p {
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--text-secondary);
+  margin: 12px 0 20px;
+}
+.promo-card .inline-flex {
+  min-height: 35px;
+  padding: 7px 20px;
+}
+.editorial-section {
+  margin-top: 96px;
+  text-align: center;
+}
+.editorial-section > h2 {
+  font-size: 24px;
+  font-weight: 700;
+}
+.editorial-section > p {
+  font-size: 14px;
+  line-height: 24px;
+  color: var(--text-secondary);
+  margin-top: 12px;
+}
+.editorial-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 24px;
+  margin-top: 40px;
+  text-align: left;
+}
+.editorial-grid article {
+  background: var(--surface-card);
+}
+.editorial-grid article > img {
+  width: 100%;
+  height: 195px;
+  object-fit: cover;
+}
+.editorial-grid article > div {
+  padding: 12px 16px;
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--text-secondary);
+}
+.editorial-grid h3 {
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 700;
+  color: var(--foreground);
+  margin: 8px 0;
+}
+.editorial-grid summary {
+  color: var(--accent);
+  margin-top: 10px;
+  cursor: pointer;
+}
+.market-footer {
+  margin-top: 96px;
+  font-size: 14px;
+}
+.footer-features {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr) 1.35fr;
+  gap: 0;
+  background: var(--surface-card);
+  padding: 32px 16px;
+}
+.footer-features > article {
+  padding: 0 16px;
+  border-right: 1px solid var(--primary);
+}
+.feature-medallion {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 74px;
+  height: 74px;
+  border-radius: 50%;
+  color: var(--background);
+  background: var(--primary);
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+.market-footer h2 {
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 22px;
+  margin-bottom: 12px;
+}
+.footer-features p {
+  color: var(--text-secondary);
+  font-size: 13px;
+  line-height: 22px;
+}
+.newsletter {
+  padding: 0 16px;
+}
+.newsletter form {
+  display: flex;
+  margin-bottom: 12px;
+}
+.newsletter input {
+  min-width: 0;
+  width: 100%;
+  padding: 12px;
+  background: var(--surface-dark);
+  border-radius: 6px 0 0 6px;
+  font-size: 12px;
+}
+.newsletter .inline-flex {
+  padding: 8px;
+  min-height: 40px;
+  border-radius: 0 6px 6px 0;
+}
+.footer-brand {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  align-items: center;
+  gap: 20px;
+  padding: 24px 32px;
+  background: var(--surface-dark);
+  font-size: 13px;
+}
+.footer-brand strong {
+  font-size: 14px;
+  letter-spacing: 1.4px;
+}
+.footer-columns {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+  padding: 32px;
+  background: var(--surface-card);
+}
+.footer-columns a,
+.footer-columns p {
+  display: block;
+  font-size: 13px;
+  line-height: 30px;
+}
+.footer-social {
+  display: flex;
+  gap: 8px;
+  margin: 16px 0 28px;
+}
+.footer-community {
+  font-size: 17px;
+  width: 21ch;
+  max-width: 100%;
+  min-width: 0;
+}
+.footer-social a {
+  display: inline-flex;
+  width: 32px;
+  height: 32px;
+  flex: none;
+}
+.wallet-chip {
+  display: flex !important;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+  border: 1px solid var(--border-soft);
+  background: var(--surface-dark);
+  color: var(--accent);
+  border-radius: 6px;
+  padding: 2px 10px;
+  font-size: 9px !important;
+  line-height: 20px !important;
+}
+.footer-bottom {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-size: 12px;
+  padding: 12px 0 20px;
+}
+.compact-demo {
+  text-align: center;
+  margin: 48px 0 20px;
+}
+.related-section {
+  margin-top: 96px;
+}
+.related-section > h2 {
+  color: var(--accent);
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+  font-size: 18px;
+  font-weight: 700;
+}
+.related-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 24px;
+  margin-top: 32px;
+}
+.related-grid .nft-card-image {
+  height: 250px;
+}
+.carousel-dots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px auto 0;
+}
+.carousel-dots button {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 32px;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  border-radius: 4px;
+}
+.carousel-dots button span {
+  width: 12px;
+  height: 12px;
+  border: 1px solid var(--primary);
+  border-radius: 50%;
+}
+.carousel-dots button[aria-current="true"] span {
+  background: var(--primary);
+}
+.carousel-dots button:hover span {
+  background: var(--secondary);
+}
+@media (pointer: coarse) {
+  .carousel-dots button {
+    width: 44px;
+    height: 44px;
+  }
+}
+@media (max-width: 1100px) {
+  .desktop-nav {
+    gap: 20px;
+    font-size: 14px;
+  }
+  .header-actions {
+    gap: 16px;
+  }
+  .wordmark {
+    min-width: 100px;
+  }
+  .market-hero {
+    grid-template-columns: 1fr 40%;
+    padding-left: 20px;
+  }
+  .hero-copy h1 {
+    font-size: 32px;
+    line-height: 52px;
+  }
+  .hero-dots {
+    color: var(--accent);
+    font-size: 12px;
+    left: 48%;
+  }
+  .catalog-layout {
+    grid-template-columns: 240px 1fr;
+    gap: 24px;
+  }
+  .market-tabs {
+    font-size: 12px;
+    gap: 10px;
+  }
+  .nft-grid {
+    gap: 48px 20px;
+  }
+  .nft-card-image {
+    height: 240px;
+  }
+  .footer-social {
+    gap: 4px;
+  }
+  .footer-brand {
+    font-size: 11px;
+  }
+  .promo-card h2 {
+    font-size: 15px;
+  }
+  .promo-card > div {
+    padding-right: 16px;
+  }
+}
+@media (max-width: 767px) {
+  .header-row {
+    align-items: center;
+    min-height: 45px;
+  }
+  .desktop-nav {
+    display: none;
+  }
+  .wordmark {
+    min-width: 0;
+  }
+  .account-link {
+    display: none !important;
+  }
+  .mobile-menu {
+    display: inline-flex;
+    padding: 8px;
+    min-height: 35px;
+  }
+  .market-hero {
+    display: grid;
+  }
+  .hero-art {
+    max-width: 450px;
+  }
+  .hero-dots {
+    color: var(--accent);
+  }
+  .catalog-layout {
+    display: flex;
+    flex-direction: column;
+  }
+  .featured-banner,
+  .collection-links,
+  .filter-help {
+    display: none;
+  }
+  .filter-card {
+    padding: 16px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .filter-card h2 {
+    display: none;
+  }
+  .filter-card .space-y-2 {
+    margin: 0;
+  }
+  .filter-card label {
+    font-size: 12px;
+  }
+  .catalog-toolbar {
+    flex-wrap: wrap;
+  }
+  .catalog-toolbar .space-y-2 {
+    max-width: 100%;
+  }
+  .nft-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .catalog-pagination {
+    margin-top: 32px;
+    justify-content: center;
+    gap: 8px;
+  }
+  .promo-grid {
+    margin-top: 48px;
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .promo-card {
+    min-height: 220px;
+  }
+  .promo-card > img {
+    height: 220px;
+  }
+  .promo-card > div {
+    padding-top: 24px;
+  }
+  .promo-card p {
+    font-size: 11px;
+  }
+  .promo-card h2 {
+    font-size: 13px;
+    line-height: 18px;
+  }
+  .promo-card .inline-flex {
+    padding-inline: 8px;
+    font-size: 12px;
+  }
+  .editorial-section {
+    margin-top: 48px;
+  }
+  .editorial-section > h2 {
+    font-size: 20px;
+  }
+  .editorial-section > p {
+    font-size: 12px;
+  }
+  .editorial-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+  .editorial-grid article > img {
+    height: 160px;
+  }
+  .editorial-grid article > div {
+    padding: 12px;
+  }
+  .editorial-grid h3 {
+    font-size: 12px;
+  }
+  .editorial-grid article p {
+    font-size: 11px;
+  }
+  .market-footer {
+    margin-top: 48px;
+  }
+  .footer-features {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding: 24px;
+  }
+  .footer-features > article {
+    padding: 0;
+    border: 0;
+  }
+  .feature-medallion {
+    width: 50px;
+    height: 50px;
+    font-size: 18px;
+  }
+  .newsletter {
+    padding: 0;
+  }
+  .footer-brand,
+  .footer-columns {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    padding: 24px;
+    gap: 24px;
+  }
+  .footer-brand span {
+    overflow-wrap: anywhere;
+  }
+  .footer-columns h2 {
+    font-size: 14px;
+  }
+  .footer-columns p,
+  .footer-columns a {
+    font-size: 11px;
+  }
+  .footer-social {
+    flex-wrap: wrap;
+  }
+  .footer-bottom {
+    font-size: 10px;
+  }
+  .wallet-chip {
+    overflow-wrap: anywhere;
+  }
+  .related-section {
+    margin-top: 48px;
+  }
+  .related-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+  }
+  .related-grid .nft-card-image {
+    height: auto;
+  }
+  .panel {
+    border-radius: 20px;
+  }
+}
+@media (max-width: 360px) {
+  .site-header,
+  .site-main,
+  .market-footer {
+    width: calc(100% - 32px);
+  }
+  .header-actions {
+    gap: 12px;
+  }
+  .filter-card {
+    grid-template-columns: 1fr;
+  }
+  .catalog-pagination {
+    font-size: 10px;
+  }
+  .footer-brand,
+  .footer-columns {
+    grid-template-columns: 1fr;
+  }
+  .market-tabs {
+    gap: 8px;
+  }
+}
