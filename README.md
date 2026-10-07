@@ -1,12 +1,17 @@
 # Jungle NFT Marketplace
 
-A React + TypeScript marketplace with a stateful REST simulation, Socket.IO events, persistent collector accounts and idempotent checkout. No blockchain, extension, real wallet or payment service is used.
+Marketplace de NFTs desenvolvido para o desafio Frontend da Jungle Gaming com React e TypeScript. Inclui catálogo, autenticação, conta, favoritos, carrinho persistente, checkout idempotente e atualização em tempo real. API REST, carteiras, pagamentos e protocolo Socket.IO são simulados.
 
-**Delivery status:** original KURIO artwork, wordmark, supplied icons, Roboto Mono and Figma colors are integrated. Desktop/mobile page layouts have been rebuilt from the exported screens. Functional flows include catalog, authentication, persistent accounts, visitor-cart merge, checkout, receipts and realtime reconciliation. See `docs/VALIDATION.md` for executed checks and deployment evidence, and `docs/DESIGN.md` for visual limitations. Public production: https://jungle-marketplace.vercel.app/ . Source repository: https://github.com/lucaswd21/jungle-frontend-challenge .
+- **Aplicação:** [jungle-marketplace.vercel.app](https://jungle-marketplace.vercel.app/)
+- **Código:** [lucaswd21/jungle-frontend-challenge](https://github.com/lucaswd21/jungle-frontend-challenge)
+- **Desafio:** [junglegaming/frontend-challenge](https://github.com/junglegaming/frontend-challenge)
+- **Design oficial:** [Frontend Challenge](https://www.figma.com/design/Ff0SksUi7UFtPWUO8kyNtw/Frontend-Challenge?node-id=0-1)
 
-## Run from a clean checkout
+Os layouts desktop/mobile usam as referências exportadas do Figma, os assets fornecidos e Roboto Mono. Os resultados executados, incluindo a limitação de performance mobile, estão em [Validação](docs/VALIDATION.md).
 
-Use Node 22.12+ (Node 24 supported) and npm. The committed lockfile is authoritative.
+## Executar localmente
+
+Use Node 22.12 ou superior (Node 24 suportado) e npm. O `package-lock.json` está versionado.
 
 ```bash
 npm ci
@@ -14,98 +19,103 @@ cp .env.example .env.local
 npm run dev
 ```
 
-Open http://127.0.0.1:5173. MSW starts before React and before importing Socket.IO, including in the demonstration build. Localhost and HTTPS support Service Workers; plain HTTP on a non-local host does not.
+Abra http://127.0.0.1:5173. No Windows, `.env.example` também pode ser copiado manualmente para `.env.local`. O MSW inicia antes da interface e do cliente Socket.IO, inclusive no build de demonstração. Service Workers exigem localhost ou HTTPS.
+
+## Verificações
 
 ```bash
-npm run typecheck
-npm run lint
-npm run build
-npm run preview
-npm test
-npm run test:report
-npm run audit
+npm run check       # TypeScript, ESLint e build de produção
+npm test            # E2E; execute o build antes
+npm run test:report  # Abre o relatório Playwright
+npm run audit       # Lighthouse: 3 execuções por página/perfil
 ```
 
-`npm test` expects an existing production build and starts its own preview. `npm run audit` starts a production preview, audits home and detail three times in each profile, and writes HTML/JSON plus medians to `reports/lighthouse`. On Linux, Chromium is provided by the locked `@sparticuz/chromium` npm package and prepared without a CDN download; its archive is extracted without restoring ownership. On other platforms, run `npx playwright install chromium` for tests. `CHROMIUM_EXECUTABLE_PATH` can select a locally installed Chromium binary for tests/audits. The bundled Linux audit runner requires `tar` and Linux system libraries; use `CHROMIUM_EXECUTABLE_PATH` on other systems.
+`npm test` inicia seu próprio preview. No Linux, Chromium vem do pacote `@sparticuz/chromium` fixado no lockfile, sem download externo. Em outras plataformas, execute `npx playwright install chromium` para os testes. Para auditoria fora do Linux, configure `CHROMIUM_EXECUTABLE_PATH` com um Chromium instalado; o preparador Linux utiliza `tar` e bibliotecas do sistema.
 
-Reports appear in `playwright-report`, failure traces in `test-results`. Visual baselines live in `tests/e2e/visual.spec.ts-snapshots` and `tests/e2e/design-flows.spec.ts-snapshots` (login/signup). The final artifact includes executed reports separately; generated reports are not source-code dependencies.
+Relatórios E2E são gerados em `playwright-report`, traces de falha em `test-results` e auditorias em `reports/lighthouse`. Referências visuais estão versionadas nas pastas `tests/e2e/*-snapshots`. Os relatórios já executados acompanham o pacote validado; arquivos gerados não fazem parte do código-fonte no GitHub.
 
-## Environment
+## Ambiente
 
-| Variable                   | Default                                                | Purpose                                                               |
-| -------------------------- | ------------------------------------------------------ | --------------------------------------------------------------------- |
-| `VITE_ENABLE_MOCKS`        | enabled unless `false`                                 | Enable shared HTTP/WebSocket mocks in development and production demo |
-| `CHROMIUM_EXECUTABLE_PATH` | bundled Linux Chromium / standard Playwright elsewhere | Browser binary for checks                                             |
-| `AUDIT_URL`                | `http://127.0.0.1:4173`                                | URL audited with default mocks                                        |
+| Variável                   | Padrão                                                                  | Finalidade                                                      |
+| -------------------------- | ----------------------------------------------------------------------- | --------------------------------------------------------------- |
+| `VITE_ENABLE_MOCKS`        | Habilitado, exceto quando `false`                                       | Ativa a simulação HTTP/WebSocket em desenvolvimento e no deploy |
+| `CHROMIUM_EXECUTABLE_PATH` | Chromium do pacote no Linux; Playwright nas demais plataformas para E2E | Seleciona o executável dos testes/auditorias                    |
+| `AUDIT_URL`                | `http://127.0.0.1:4173`                                                 | Endereço auditado com o cenário padrão                          |
 
-There is no private backend. Disabling mocks requires supplying a compatible API and realtime service and is not the demonstration configuration. Never add real credentials to this project.
+Não há backend privado. Desabilitar mocks exige API e serviço realtime compatíveis. A demonstração usa mocks habilitados e não requer credenciais externas.
 
-## Demo accounts
+## Contas e dados de teste
 
-| Email               | Password     |
+| E-mail              | Senha        |
 | ------------------- | ------------ |
 | `alex@example.test` | `Jungle123!` |
 | `maya@example.test` | `Jungle123!` |
 
-Coupon: `JUNGLE10` (10% of subtotal). `EXPIRED` deliberately fails. ETH values are exact decimal strings; the network fee is `0.016 ETH`. Edition choices are 1/50, 1/10, 1/1 and ABERTA; NFT 3 has a sold-out 1/10 edition.
+Cupom `JUNGLE10`: desconto de 10% do subtotal. `EXPIRED` produz erro de validade. Taxa simulada: `0.016 ETH`. Edições: 1/50, 1/10, 1/1 e ABERTA; o NFT 3 tem a edição 1/10 esgotada.
 
-Google/Facebook buttons sign in to the documented demo accounts through the simulated API; they are not external OAuth. Password recovery displays demo guidance and sends no email.
+Google/Facebook autenticam as contas de demonstração pela API simulada. A recuperação de senha apresenta orientação e não envia e-mail. Conexão de carteira e dados ENS são validados sem extensão ou resolução externa.
 
-Checkout includes the design’s collector/profile fields, registered wallet address, simulated provider, referral, ENS suffix and optional note. Name/email/username are prefilled from the account; the demo referral defaults to `JUNGLE`. ENS/provider metadata is validated and stored without external resolution or connection. Profile username/ENS/wallet alias and wallet metadata also persist. Password changes require matching confirmation.
+Perfil, avatar, senha, carteiras, favoritos, carrinho e pedidos persistem neste navegador até o reset. O armazenamento usa `jungle.mock.db.v2`. As contas têm dados independentes; o carrinho visitante é incorporado no login, respeitando estoque. Os campos do checkout são preenchidos a partir da conta e podem ser editados; indicação, sufixo ENS e observações são validados e armazenados.
 
-Account changes, avatar, hashed passwords, wallets, favorites, cart and orders persist in this browser until reset. The updated fixtures use storage schema `jungle.mock.db.v2`; data from the previous visual build is reset once. The two demo accounts begin with independent wallets and data. Visitor cart contents merge on sign-in, bounded by availability.
+## Reproduzir falhas e eventos
 
-## Demonstration and failures
+Abra `/?demo=1` ou acrescente `&demo=1` a uma URL com parâmetros. O botão **Cenários de demonstração** aparece abaixo do conteúdo nas páginas com diagnóstico. Para testar checkout, selecione o cenário no mercado antes de navegar para pagamento. Na navegação normal, esses controles ficam ocultos.
 
-Add `?demo=1` to the desired page URL (or `&demo=1` when it already has query parameters) to enable diagnostic controls, then open **Cenários de demonstração** below the page content. Normal page navigation does not show this trigger. Select a scenario or trigger a network event. The dialog's buttons make HTTP calls to mock-only endpoints; they do not call React setters or Query methods to fake realtime events.
+Os controles fazem chamadas HTTP. Eventos atravessam a conexão Socket.IO interceptada, sem alterar diretamente o estado React.
 
-| Scenario/control                    | Reproduction                                                                                                    |
-| ----------------------------------- | --------------------------------------------------------------------------------------------------------------- |
-| `standard`                          | Default successful flows; no artificial latency                                                                 |
-| `empty`                             | Return to the catalog; empty-result feedback                                                                    |
-| `slow`                              | Open a new detail route; shimmer skeletons for 2 seconds                                                        |
-| `variable`                          | Change searches quickly; alternating 900/80 ms latency; obsolete requests cannot replace current data           |
-| `offline` / `server-error`          | Queries fail at the network layer / HTTP 503; select `standard` and retry                                       |
-| `invalid-cart` / `html-response`    | Malformed cart JSON / HTML with HTTP 200; shell remains usable, cart shows a recoverable error                  |
-| `unauthorized`                      | Private API returns 403                                                                                         |
-| `expired` / Expire session          | On checkout, return to login while preserving cart and destination; choose `standard` to stop forced expiration |
-| `signup-conflict`                   | Signup returns an email conflict                                                                                |
-| `validation`                        | Profile name rejected by the API with a field error                                                             |
-| `invalid-coupon` / `expired-coupon` | Apply a coupon to exercise validation; removal remains possible                                                 |
-| `favorite-failure`                  | Toggle a favorite; optimistic state rolls back                                                                  |
-| `price-change` / `sold-out`         | Submit reviewed checkout; server changes price/stock and rejects stale quote; re-review required                |
-| `timeout`                           | Server creates an order but delays its response beyond Axios's timeout; recovery gets the same order by key     |
-| `declined`                          | Payment resolves declined; cart retained and reserved inventory restored                                        |
-| Change NFT price / Exhaust edition  | With an item in the cart, send `nft.updated` through the intercepted Socket.IO connection                       |
-| Duplicate / Older event             | Replay an event or a deliberately stale resource snapshot; UI must not regress                                  |
-| Interrupt socket                    | Close the intercepted connection; Socket.IO reconnects and active resources reconcile via REST                  |
-| Resolve pending orders              | Deterministically resolve pending orders, using the mock server and Socket.IO                                   |
-| Reset all demo data                 | Restore catalog, accounts, passwords, wallets, sessions, cart, orders, sequence and scenario                    |
+| Cenário/controle                    | Como reproduzir                                                                 |
+| ----------------------------------- | ------------------------------------------------------------------------------- |
+| `standard`                          | Fluxos normais, sem latência artificial                                         |
+| `empty`                             | Volte ao catálogo para ver o estado vazio                                       |
+| `slow`                              | Abra um detalhe novo; skeleton por 2 segundos                                   |
+| `variable`                          | Altere buscas rapidamente; latências alternadas de 900/80 ms                    |
+| `offline` / `server-error`          | Falha de rede / HTTP 503; restaure `standard` e tente novamente                 |
+| `invalid-cart` / `html-response`    | JSON de carrinho inválido / HTML com HTTP 200; erro recuperável                 |
+| `unauthorized`                      | API privada retorna 403                                                         |
+| `expired` / Expire session          | Sessão expira no checkout; login preserva carrinho/destino; restaure `standard` |
+| `signup-conflict`                   | Cadastro retorna conflito de e-mail                                             |
+| `validation`                        | API rejeita nome do perfil com erro no campo                                    |
+| `invalid-coupon` / `expired-coupon` | Aplique cupom; remoção continua disponível                                      |
+| `favorite-failure`                  | Favorite um NFT; a alteração otimista é desfeita                                |
+| `price-change` / `sold-out`         | Envie a compra revisada; alteração de preço/estoque exige nova revisão          |
+| `timeout`                           | Pedido é criado, mas a resposta atrasa; recuperação usa a mesma chave           |
+| `declined`                          | Pagamento recusado; carrinho preservado e estoque reservado devolvido           |
+| Change NFT price / Exhaust edition  | Emita `nft.updated` para mudar preço/estoque de item no carrinho                |
+| Duplicate event / Send older event  | Reenvie evento repetido ou antigo; dados não devem regredir                     |
+| Interrupt socket                    | Interrompa conexão; cliente reconecta e reconcilia por REST                     |
+| Resolve pending orders              | Resolva pedidos pendentes pelo simulador e Socket.IO                            |
+| Reset all demo data                 | Restaure catálogo, contas, senhas, carteiras, sessões, pedidos e cenário        |
 
-## Routes
+## Rotas e navegação
 
-`/`, `/nfts/:nftId`, `/cart`, `/login`, `/signup`, `/checkout`, `/orders/:orderId`, `/profile`, `/wallets`. Private routes validate the current session, including direct navigation. Search/filter/sort/page/catalog tab are URL state. Orders have ownership checks. Unknown routes render a 404.
+`/`, `/nfts/:nftId`, `/cart`, `/login`, `/signup`, `/checkout`, `/orders/:orderId`, `/profile`, `/wallets`. Rotas privadas validam sessão também no acesso direto. Busca, filtros, ordenação, página e aba do catálogo ficam na URL. Pedidos verificam proprietário; rotas desconhecidas exibem 404.
 
-On desktop, the header's Entrar button opens authentication over the existing page, without changing the URL or remounting its catalog. Direct `/login` and `/signup` links still work, including checkout redirects and standalone mobile forms. Opening/closing dialogs and supported-browser route changes use short fades; reduced-motion disables them. The home navbar follows the visible catalog/learn/creators section; on other routes it marks the corresponding destination.
+No desktop, **Entrar** abre modal sobre a página atual, preservando catálogo e URL. As rotas de login/cadastro também funcionam diretamente; no mobile, têm formulários próprios. Filtros mantêm a posição da seção; paginação volta ao início do catálogo. A navbar acompanha as seções da home e a rota nas outras páginas. Transições respeitam movimento reduzido.
 
-Todos os NFTs, Novos lançamentos and Em alta call the same catalog API and combine with filters, ordering and pagination. New releases are the first twelve fixture entries; trending uses a deterministic demonstration ranking, not real market analytics. Footer social links lead to each platform's homepage because no official KURIO account URLs were provided. Google/Facebook sign-in remains the separately documented API simulation.
+As três abas do catálogo usam a mesma API. Novos lançamentos são as primeiras 12 entradas; Em alta usa ranking determinístico de teste. Redes sociais do rodapé levam às páginas iniciais das plataformas, pois não foram fornecidos perfis oficiais da KURIO.
 
 ## Deploy
 
-Build command: `npm run build`. Output: `dist`. Keep mocks enabled and upload the Service Worker, fonts, SVGs and JS assets. `vercel.json` and `public/_redirects` configure SPA fallback for Vercel and Netlify/Cloudflare Pages. Vercel is recommended by the challenge; Cloudflare Pages is also accepted.
+Comando: `npm run build`. Saída: `dist`. Mantenha mocks habilitados e inclua Service Worker, fontes e assets. `vercel.json` e `public/_redirects` configuram fallback da SPA na Vercel e em Netlify/Cloudflare Pages. Para conferir localmente, use `npm run preview`.
 
-Before submission, test the public URL on `/nfts/nft-1`, `/checkout`, `/profile`, `/wallets` and an order URL, including refresh. Reproduce the realtime price change and a full purchase there. Do not use a development preview URL as the final public deployment.
+Antes de entregar, teste no endereço público acesso direto e refresh de detalhe, checkout, perfil, carteiras e pedido, uma compra completa e alteração realtime de preço.
 
-## Read the code
+## Organização e documentação
 
-- `src/api`: typed contracts and Axios transport.
-- `src/mocks`: fixtures, persistent server state, REST handlers and Socket.IO binding.
-- `src/app`: providers, routes, query policy and shell.
-- `src/features`: product flows and server-state hooks.
-- `src/features/account`: focused wallet and password forms, separate from profile orchestration.
-- `src/styles`: tokens/base, marketplace layout and page layouts; Tailwind utilities remain in components.
-- `src/realtime`: subscriptions, resource versions and REST reconciliation.
-- `src/components/ui`: adapted shadcn/ui composition with Radix, Slot and cva.
-- `tests/e2e`: isolated browser contexts, real UI interactions and network-level simulation.
+| Local               | Responsabilidade                                                   |
+| ------------------- | ------------------------------------------------------------------ |
+| `src/api`           | Contratos tipados e transporte Axios                               |
+| `src/mocks`         | Dados de teste, estado persistente, REST e binding Socket.IO       |
+| `src/app`           | Providers, rotas, política de queries e estrutura da aplicação     |
+| `src/features`      | Fluxos de negócio e hooks; formulários de conta em `account`       |
+| `src/styles`        | Tokens e layouts responsivos; utilitários Tailwind nos componentes |
+| `src/realtime`      | Assinaturas, versões de recursos e reconciliação REST              |
+| `src/components/ui` | Composição shadcn/ui adaptada com Radix, Slot e cva                |
+| `tests/e2e`         | Interações reais em contextos isolados e falhas de rede            |
 
-See `ARCHITECTURE.md`, `docs/CONTRACTS.md`, `docs/DEFENSE_GUIDE.md` and `docs/REQUIREMENTS.md`.
+- [Arquitetura](ARCHITECTURE.md): decisões, consistência, cache e limites da simulação.
+- [Contratos](docs/CONTRACTS.md): endpoints, payloads, erros e eventos.
+- [Design](docs/DESIGN.md): referências, tokens, assets e diferenças visuais.
+- [Validação](docs/VALIDATION.md): resultados executados e condições de medição.
+- [Requisitos](docs/REQUIREMENTS.md): correspondência com critérios do desafio.
+- [Guia de defesa técnica](docs/DEFENSE_GUIDE.md): roteiro de estudo e demonstração.

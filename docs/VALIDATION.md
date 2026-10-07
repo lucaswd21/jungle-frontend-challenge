@@ -1,48 +1,46 @@
-# Current validation
+# Validação executada
 
-Final verification on 2026-10-07, using the production build, original fixtures and default stateful MSW scenario. These are local build measurements, not deployed CDN measurements.
+Verificações realizadas em 07/10/2026 com build de produção, dados originais de teste e cenário padrão do MSW. As medições são locais, não do CDN publicado. Esta revisão de documentação não representa nova execução da suíte ou do Lighthouse.
 
-## Types, lint and full E2E suite
+## TypeScript, lint e E2E
 
-`npm run check` passed TypeScript, ESLint and production build. The final normal Playwright run (no snapshot updates and no retries) finished with **88 passed, 12 skipped, zero failed**, across Chromium desktop (1440 × 1000) and mobile (390 × 844). The skips are deliberate cases exclusive to the other viewport, not unfinished mandatory flows. Duration: 4.9 minutes. Playwright 1.63.0 and Vite 8.3.2.
+`npm run check` passou TypeScript, ESLint e build. A última suíte completa Playwright, sem atualização de snapshots e sem retries, terminou com **88 testes aprovados, 12 ignorados e zero falhas**. Os casos ignorados são exclusivos do outro viewport, não fluxos obrigatórios pendentes. Chromium desktop: 1440 × 1000; mobile: 390 × 844. Duração: 4,9 minutos. Playwright 1.63.0, Vite 8.3.2.
 
-Covered catalog URL/history, direct/missing NFT, editions/quantity, account isolation and session expiry, favorites with optimistic rollback, persisted guest cart/login merge, coupons, profile/avatar/password/wallet edits, confirmed/declined/pending orders, duplicate submission/timeout idempotency, immutable receipts, Socket.IO updates/duplicate and old events/reconnection, idle and stopped-worker recovery, accessible error feedback, keyboard/dialog focus, Axe and horizontal overflow.
+Cobertura: URL/histórico do catálogo; detalhe direto/ausente; edições/quantidade; isolamento e expiração de sessão; favoritos com rollback; persistência/incorporação do carrinho visitante; cupons; perfil/avatar/senha/carteiras; pedidos confirmados, recusados e pendentes; envio duplicado/timeout; recibos imutáveis; eventos Socket.IO novos, repetidos e antigos; reconexão; recuperação após inatividade/worker parado; feedback, teclado/foco, Axe e ausência de overflow horizontal.
 
-Reviewed versioned visual baselines cover home, detail, cart, checkout, auth, profile, wallets, receipt and footer. Only three baselines changed in this pass: home mobile (bottom safe area), cart desktop (image compression) and detail desktop (compression and carousel hit area).
+Referências visuais versionadas cobrem home, detalhe, carrinho, pagamento, autenticação, perfil, carteiras, recibo e rodapé. A passagem final corrigiu paginação coberta pela navegação inferior mobile e um preparo inadequado do cenário de falha de carrinho; ambos foram confirmados com cliques normais. Relatórios e traces iniciais permanecem no pacote validado.
 
-The first complete run found two pagination failures caused by the fixed phone navigation covering the controls, and one fixture issue: the cart mutation test reloaded under a global server-error scenario before attempting the mutation. The delivered CSS reserves 144 px plus safe area and respects scroll padding; the fixture now fails the next real REST mutation without discarding the loaded UI. All three cases pass normally, without forced clicks. Initial failure traces are retained alongside the successful final report.
+Artefatos: `reports/e2e-final-full/index.html`, `reports/e2e-final-initial/index.html`, `reports/e2e-final-fixes`, `reports/e2e-final-visual`.
 
-Artifacts: `reports/e2e-final-full/index.html`, `reports/e2e-final-initial/index.html`, `reports/e2e-final-fixes`, `reports/e2e-final-visual`. Reports are included in the delivery ZIP and reproducible from the checkout.
+### Ajuste posterior da galeria
 
-## NFT gallery follow-up
+Depois da suíte completa/auditoria, a galeria recebeu textos em português, miniaturas horizontais no modal e lupa com fundo circular marrom. A coluna de miniaturas da página desktop foi preservada. `npm run check` passou; testes focados aprovaram quatro casos e ignoraram dois específicos do outro viewport, verificando troca de imagem, alinhamento, Escape, retorno de foco e Axe no modal.
 
-After the full-suite/audit checkpoint above, the detail gallery received a focused visual correction: Portuguese viewer text/accessible names, a horizontal thumbnail strip inside the enlarged viewer, and a circular brown zoom affordance. The page's desktop thumbnail column remains unchanged. `npm run check` passed; the focused detail run passed four tests with two viewport-specific skips, including image switching, horizontal alignment, Escape/focus restoration and an Axe scan of the viewer in both profiles. Evidence: `reports/e2e-gallery-final`, `reports/gallery-1440.png`, `reports/gallery-390.png`. The visual update run passed four tests; a normal comparison run (without snapshot updates) passed both desktop/mobile multi-page visual cases. Reports: `reports/e2e-gallery-visual` and `reports/e2e-gallery-visual-confirmed`.
+A atualização visual passou quatro casos; a comparação normal, sem atualizar snapshots, passou os dois casos visuais multipágina desktop/mobile. Evidências: `reports/e2e-gallery-final`, `reports/e2e-gallery-visual`, `reports/e2e-gallery-visual-confirmed`, `reports/gallery-1440.png`, `reports/gallery-390.png`.
 
-The full suite and Lighthouse figures below belong to the preceding validation checkpoint, not a fresh audit after this small gallery correction.
+## Lighthouse: última medição
 
-## Lighthouse: latest measured checkpoint
+Três execuções por página/perfil, 12 no total; mediana independente de cada categoria/métrica. Auditoria após encerrar E2E, com limitação simulada padrão do Lighthouse, configuração desktop quando aplicável, Chromium do pacote e perfil temporário isolado a cada execução. Mocks, assets e funcionalidades permaneceram ativos. As medições precedem o ajuste pequeno da galeria descrito acima.
 
-Three runs per page/profile, twelve total; independent median for each category and metric. Auditing started after E2E finished. Standard Lighthouse simulated throttling, desktop config for desktop, bundled Chromium, isolated temporary profile per run. No audit-only data, hidden assets, disabled mocks or alternate business paths.
+| Página  | Perfil  | Performance | Acessibilidade | Boas práticas | SEO | LCP (ms) |    CLS | TBT (ms) |
+| ------- | ------- | ----------: | -------------: | ------------: | --: | -------: | -----: | -------: |
+| Home    | Mobile  |          85 |            100 |            96 | 100 |     3878 | 0,0010 |     27,5 |
+| Home    | Desktop |          98 |            100 |           100 | 100 |     1026 | 0,0063 |      0,0 |
+| Detalhe | Mobile  |          85 |            100 |            96 | 100 |     3785 | 0,0293 |      3,0 |
+| Detalhe | Desktop |          98 |            100 |           100 | 100 |      984 | 0,0464 |      0,0 |
 
-| Page | Profile | Performance | Accessibility | Best Practices | SEO | LCP (ms) | CLS | TBT (ms) |
-| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| home | mobile | 85 | 100 | 96 | 100 | 3878 | 0.0010 | 27.5 |
-| home | desktop | 98 | 100 | 100 | 100 | 1026 | 0.0063 | 0.0 |
-| detail | mobile | 85 | 100 | 96 | 100 | 3785 | 0.0293 | 3.0 |
-| detail | desktop | 98 | 100 | 100 | 100 | 984 | 0.0464 | 0.0 |
+Ambiente: Node v24.19.0, Linux x64, Lighthouse 13.5.0, Chromium 153.0.8010.0. URL: `http://127.0.0.1:4173`.
 
-Environment: Node v24.19.0, linux x64, Lighthouse 13.5.0. Chromium: `Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.8010.0 Safari/537.36`. Base URL: `http://127.0.0.1:4173`.
+**Performance mobile ficou em 85 na home e no detalhe, abaixo da meta de 90.** As demais categorias atingiram as metas. O resultado abaixo da meta permanece uma limitação explicada, não um resultado aprovado.
 
-All category targets pass except **mobile Performance (85 on home and detail; target 90)**. This remains a limitation, not a passing score. The challenge permits explaining below-target results; it does not make the score a substitute for executable core flows.
+A cadeia observada indica custo de inicialização React/Router/Query/MSW e descoberta das imagens após resposta da API. O chunk do MSW tem cerca de 454 KB minificado / 169 KB gzip; bloqueio é baixo, mas carregamento inicial atrasa a imagem principal. Experimentos com dicas antecipadas de módulos/imagens e renderização antes da preparação do mock pioraram as notas simuladas e foram descartados. Mudanças maiores de bundle/renderização exigiriam trabalho adicional.
 
-The mobile loading chain remains dominated by React/Router/Query/MSW bootstrap and data-dependent artwork discovery. The MSW browser chunk is approximately 454 KB minified / 169 KB gzip; blocking time is low, but cold network/bootstrap delays the meaningful artwork paint. Standard mocks have no artificial latency. Experiments with early module/image hints and rendering before mock readiness worsened simulated mobile results; they were discarded, preserving the simpler, tested startup. More invasive bundle/SSR work remains a possible follow-up and is not claimed complete here.
+O alerta de boas práticas mobile está associado aos ícones PNG fornecidos em baixa resolução para densidades maiores que 1. As notas de acessibilidade/SEO refletem nomes acessíveis alinhados ao texto visível, áreas de toque ajustadas, `robots.txt` e descrição em português. A otimização de imagens e suas limitações estão em [Design](DESIGN.md#assets).
 
-Mobile Best Practices 96 comes from supplied low-resolution PNG icons at device pixel ratio greater than one. Original icons are retained; the score still exceeds the required 95. Desktop accessibility improved to 100 by matching accessible names to the visible labels and increasing carousel button hit width to 24 px. SEO improved to 100 with an actual robots.txt and a Portuguese description.
+Relatórios HTML/JSON e medianas: `reports/lighthouse`; comparação anterior à otimização: `reports/lighthouse-final-before-optimization`. Runner: `scripts/audit.mjs`. Os valores não são uma seleção das melhores execuções.
 
-The five original artworks are encoded as WebP quality 95, method 6, exact alpha. Combined transfer size is reduced from 492,882 to 120,552 bytes (75.5%). Dimensions and alpha channels are unchanged; this is high-quality lossy compression, not pixel equality. Original PNG exports remain included. `reports/image-optimization.json` records individual sizes and checks. No recoloring or generated replacements.
+## Publicação e reprodução
 
-Raw HTML/JSON and medians: `reports/lighthouse`; baseline before optimization: `reports/lighthouse-final-before-optimization`. Runner/config: `scripts/audit.mjs`. Measurements reflect the pre-gallery validation checkpoint; they are not selected best runs. Historical checks are separated in [VALIDATION-HISTORY.md](VALIDATION-HISTORY.md).
-
-## GitHub delivery
-
-Source repository: https://github.com/lucaswd21/jungle-frontend-challenge . The public repository includes source, original assets, lockfile, executable E2E tests, visual baselines, CI and architecture documentation. Generated test traces and Lighthouse HTML/JSON remain in the validated ZIP rather than the source repository; they can be reproduced using the documented commands. The history document records earlier checkpoints before publication.
+- [Produção](https://jungle-marketplace.vercel.app/): deploy Vercel confirmado como `READY`, sem erro de alias. A inspeção pública registrada cobriu catálogo, detalhe, carrinho e persistência no refresh. Não equivale a executar toda a suíte contra o CDN.
+- [Código](https://github.com/lucaswd21/jungle-frontend-challenge): fonte, assets, lockfile, E2E, referências visuais, CI e documentação publicados. A publicação inicial foi conferida por igualdade da árvore Git com a fonte local validada.
+- Os relatórios gerados acompanham o pacote validado e não são dependências do repositório. Comandos para reproduzir estão no [README](../README.md#verificações). A configuração de CI está versionada; os resultados acima são das execuções locais, sem afirmar uma execução aprovada no GitHub Actions.
