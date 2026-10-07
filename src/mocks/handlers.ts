@@ -123,9 +123,7 @@ export const handlers = [
       typeof password !== "string" ||
       a.passwordHash !== (await hashPassword(password, a.salt))
     )
-      return fail(422, "INVALID_CREDENTIALS", "E-mail ou senha incorretos.", {
-        password: "Confira suas credenciais.",
-      });
+      return fail(422, "INVALID_CREDENTIALS", "E-mail ou senha incorretos.");
     return json(login(a));
   }),
   http.delete("/api/session", ({ request }) => {

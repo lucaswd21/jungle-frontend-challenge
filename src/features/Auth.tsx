@@ -49,6 +49,7 @@ export function AuthDialog({
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [open, setOpen] = useState(true);
   const mutation = useMutation({
+    meta: { errorHandledLocally: true },
     mutationFn: () =>
       signup
         ? api.signup({ name, email, password })
@@ -66,6 +67,7 @@ export function AuthDialog({
     await navigate({ to: returnTo || "/" });
   }
   const social = useMutation({
+    meta: { errorHandledLocally: true },
     mutationFn: (provider: "google" | "facebook") =>
       api.login({
         email:

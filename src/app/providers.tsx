@@ -32,14 +32,19 @@ export function Providers({ children }: { children: ReactNode }) {
     [],
   );
   useEffect(() => {
-    if (!message || message.kind === "error") return;
-    const timer = setTimeout(() => setMessage(null), 10000);
+    if (!message) return;
+    const duration = message.kind === "error" ? 8000 : 5000;
+    const timer = setTimeout(() => setMessage(null), duration);
     return () => clearTimeout(timer);
   }, [message]);
   useEffect(
     () =>
       queryClient.getMutationCache().subscribe((event) => {
-        if (event.type === "updated" && event.action.type === "error") {
+        if (
+          event.type === "updated" &&
+          event.action.type === "error" &&
+          !event.mutation.options.meta?.errorHandledLocally
+        ) {
           notify(errorMessage(event.mutation.state.error), "error");
         }
       }),

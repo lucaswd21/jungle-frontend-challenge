@@ -28,10 +28,18 @@ test("password toggle stays centered after rejected credentials", async ({
   });
   await expectCentered(password, toggle);
   await page.getByRole("button", { name: "Entrar", exact: true }).click();
+  await expect(page.getByRole("dialog").getByRole("alert")).toHaveText(
+    "E-mail ou senha incorretos.",
+  );
+  await expect(
+    page.getByText("E-mail ou senha incorretos.", { exact: true }),
+  ).toHaveCount(1);
   await expect(
     page.getByText("Confira suas credenciais.", { exact: true }),
-  ).toBeVisible();
-  await expect(password).toHaveAttribute("aria-invalid", "true");
+  ).toHaveCount(0);
+  await expect(
+    page.getByRole("button", { name: "Fechar notificação" }),
+  ).toHaveCount(0);
   await expectCentered(password, toggle);
   await toggle.click();
   await expect(password).toHaveAttribute("type", "text");
@@ -40,11 +48,9 @@ test("password toggle stays centered after rejected credentials", async ({
     password,
     page.getByRole("button", { name: "Ocultar senha", exact: true }),
   );
-  await page
-    .getByRole("dialog")
-    .screenshot({
-      path: `reports/auth-error-${page.viewportSize()!.width}.png`,
-    });
+  await page.getByRole("dialog").screenshot({
+    path: `reports/auth-error-${page.viewportSize()!.width}.png`,
+  });
 });
 
 test("mobile confirmation toggle stays centered with mismatch feedback", async ({

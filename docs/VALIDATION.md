@@ -24,6 +24,14 @@ O controle de exibir/ocultar senha passou a ser posicionado no container do inpu
 
 Evidências: `reports/e2e-auth-alignment`, `reports/auth-error-1440.png`, `reports/auth-error-390.png` e `reports/auth-alignment-check.txt`.
 
+### Feedback sem repetição e notificações temporizadas
+
+Autenticação mantém o erro de credenciais no formulário, sem mensagem repetida no campo ou notificação global. Validações específicas do cadastro continuam junto aos campos. Notificações informativas desaparecem após 5 segundos, erros após 8; nova mensagem reinicia o prazo e fechamento manual permanece disponível.
+
+`npm run check` passou. A execução focada aprovou nove casos, com um exclusivo de mobile ignorado, cobrindo aviso único no login, senha/confirmação, acessibilidade e referências visuais existentes, prazo/reinício das notificações e logout sem fechar o modal indevidamente. Um teste adicional mobile confirmou expiração do aviso de falha do carrinho sem alterar quantidade. O relógio controlado do Playwright verifica os prazos sem esperas reais.
+
+Evidências: `reports/e2e-notification-feedback`, `reports/e2e-notification-cart`, `reports/notification-check.txt`. A suíte completa e Lighthouse abaixo continuam sendo os checkpoints anteriores.
+
 ## Lighthouse: última medição
 
 Três execuções por página/perfil, 12 no total; mediana independente de cada categoria/métrica. Auditoria após encerrar E2E, com limitação simulada padrão do Lighthouse, configuração desktop quando aplicável, Chromium do pacote e perfil temporário isolado a cada execução. Mocks, assets e funcionalidades permaneceram ativos. As medições precedem o ajuste pequeno da galeria descrito acima.

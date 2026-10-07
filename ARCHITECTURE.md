@@ -68,7 +68,7 @@ Assinaturas guardam IDs vistos e maior versão por recurso. Eventos duplicados/a
 
 Login do header desktop usa modal local; mantém página, filtros e scroll. Rotas de autenticação reutilizam formulários. Radix controla modalidade, foco, Escape e presença durante fechamento animado. Diálogo de revisão devolve foco ao botão de origem. Transições de rota focam o conteúdo principal; carregamento inicial mantém o link de pular conteúdo disponível.
 
-Campos têm labels/erros associados. Feedback global usa região viva educada em português, com fechamento manual. Cache de mutações informa falhas junto aos erros locais; mensagens repetidas reiniciam tempo de exibição. Estoque/validação têm texto. Movimento reduzido desativa animações/scroll suave. Acompanhamento das seções usa `requestAnimationFrame` e remove listeners/observers ao encerrar.
+Campos têm labels/erros associados. Feedback global usa região viva educada em português, com fechamento manual ou automático: 5 segundos para informação e 8 para erro. Cache de mutações informa falhas sem tratamento local; autenticação marca `errorHandledLocally` para manter apenas o aviso no formulário. Mensagens repetidas reiniciam o prazo. Estoque/validação têm texto. Movimento reduzido desativa animações/scroll suave. Acompanhamento das seções usa `requestAnimationFrame` e remove listeners/observers ao encerrar.
 
 Rotas fora do catálogo usam `lazyRouteComponent`; proteções continuam carregadas de início. Socket.IO é importado após resolver identidade, em período ocioso com prazo de um segundo. Mobile evita montar conteúdo exclusivo desktop/filtros fechados. Imagens inicialmente visíveis são prioritárias; demais usam lazy loading. Skeletons preservam dimensões. Cenário padrão não adiciona latência.
 

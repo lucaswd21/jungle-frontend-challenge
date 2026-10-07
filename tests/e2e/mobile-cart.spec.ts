@@ -72,6 +72,7 @@ test("cart mutation failure stays readable and preserves quantity", async ({
   );
   // Fail the next mutation while preserving the already-loaded cart UI.
   await demo(page, "server-error", false, false);
+  await page.clock.install();
   await page
     .getByRole("button", {
       name: "Aumentar quantidade de Emerald Ape #042",
@@ -82,12 +83,11 @@ test("cart mutation failure stays readable and preserves quantity", async ({
     .getByRole("status")
     .filter({ hasText: "Ação não concluída" });
   await expect(notice).toBeVisible();
-  await page.clock.install();
-  await page.clock.fastForward(11000);
+  await page.clock.fastForward(6000);
   await expect(notice).toBeVisible();
+  await page.clock.fastForward(3000);
+  await expect(notice).toHaveCount(0);
   await expect(page.getByLabel("Quantity for Emerald Ape #042")).toHaveValue(
     "1",
   );
-  await notice.getByRole("button", { name: "Fechar notificação" }).click();
-  await expect(notice).toHaveCount(0);
 });
