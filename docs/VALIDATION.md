@@ -58,3 +58,7 @@ Relatórios HTML/JSON e medianas: `reports/lighthouse`; comparação anterior à
 - [Produção](https://jungle-marketplace.vercel.app/): deploy Vercel confirmado como `READY`, sem erro de alias. A inspeção pública registrada cobriu catálogo, detalhe, carrinho e persistência no refresh. Não equivale a executar toda a suíte contra o CDN.
 - [Código](https://github.com/lucaswd21/jungle-frontend-challenge): fonte, assets, lockfile, E2E, referências visuais, CI e documentação publicados. A publicação inicial foi conferida por igualdade da árvore Git com a fonte local validada.
 - Os relatórios gerados acompanham o pacote validado e não são dependências do repositório. Comandos para reproduzir estão no [README](../README.md#verificações). A configuração de CI está versionada; os resultados acima são das execuções locais, sem afirmar uma execução aprovada no GitHub Actions.
+
+## Feedback de logout
+
+Os botões de sair mostram “Saindo…” e ficam desabilitados durante a operação, com proteção adicional contra chamadas repetidas. `npm run check` passou. Os seis casos de `order-logout-regression.spec.ts` passaram em desktop e mobile, incluindo requisição de logout atrasada, envio único, retorno à home, sessão encerrada após refresh e recibo com desconto fracionário. O guia pessoal de estudo foi removido da entrega.

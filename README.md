@@ -118,4 +118,3 @@ Antes de entregar, teste no endereço público acesso direto e refresh de detalh
 - [Design](docs/DESIGN.md): referências, tokens, assets e diferenças visuais.
 - [Validação](docs/VALIDATION.md): resultados executados e condições de medição.
 - [Requisitos](docs/REQUIREMENTS.md): correspondência com critérios do desafio.
-- [Guia de defesa técnica](docs/DEFENSE_GUIDE.md): roteiro de estudo e demonstração.

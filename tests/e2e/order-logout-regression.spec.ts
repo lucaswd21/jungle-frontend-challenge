@@ -47,3 +47,63 @@ test("intentional logout reaches home without a session-expired redirect", async
   await expect(page).toHaveURL(authURL);
   await expect(page.getByRole("dialog")).toBeVisible();
 });
+
+test("logout shows pending feedback and sends only one request", async ({
+  page,
+}) => {
+  await login(page);
+  await ready(page, "/profile");
+  // Hold the outgoing request, then release it to the actual MSW handler.
+  await page.evaluate(() => {
+    const originalOpen = XMLHttpRequest.prototype.open;
+    const originalSend = XMLHttpRequest.prototype.send;
+    const logoutRequests = new WeakSet<XMLHttpRequest>();
+    XMLHttpRequest.prototype.open = function (method, url, ...args) {
+      if (method === "DELETE" && String(url).endsWith("/session"))
+        logoutRequests.add(this);
+      return originalOpen.call(
+        this,
+        method,
+        url,
+        ...(args as [boolean, string?, string?]),
+      );
+    };
+    XMLHttpRequest.prototype.send = function (body) {
+      if (!logoutRequests.has(this)) return originalSend.call(this, body);
+      document.documentElement.dataset.logoutRequests = String(
+        Number(document.documentElement.dataset.logoutRequests ?? 0) + 1,
+      );
+      window.addEventListener(
+        "release-logout",
+        () => originalSend.call(this, body),
+        { once: true },
+      );
+    };
+  });
+  await page.getByRole("button", { name: "Sair", exact: true }).click();
+  const pending = page.getByRole("button", { name: "Saindo…", exact: true });
+  await expect(pending.first()).toBeDisabled();
+  await expect(pending.first()).toHaveAttribute("aria-busy", "true");
+  for (const button of await pending.all()) {
+    await expect(button).toBeDisabled();
+    await button.evaluate((element: HTMLButtonElement) => element.click());
+  }
+  await expect(page.locator("html")).toHaveAttribute(
+    "data-logout-requests",
+    "1",
+  );
+  await page.evaluate(() => window.dispatchEvent(new Event("release-logout")));
+  await expect.poll(() => new URL(page.url()).pathname).toBe("/");
+  await expect(
+    page.getByRole("status").filter({ hasText: "Você saiu da sua conta." }),
+  ).toBeVisible();
+  await expect(pending).toHaveCount(0);
+  if (page.viewportSize()!.width >= 768)
+    await expect(
+      page.getByRole("button", { name: "Entrar", exact: true }),
+    ).toBeVisible();
+  await page.reload();
+  await expect(
+    page.getByRole("link", { name: "Perfil do colecionador", exact: true }),
+  ).toHaveCount(0);
+});

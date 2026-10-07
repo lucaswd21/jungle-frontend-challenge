@@ -57,6 +57,7 @@ export function Layout() {
   const previousUser = useRef<string | null | undefined>(undefined);
   const previousPath = useRef<string | undefined>(undefined);
   const intentionalLogout = useRef(false);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
   useEffect(() => {
     const current = user?.id ?? null;
     if (
@@ -110,7 +111,9 @@ export function Layout() {
     previousPath.current = location.pathname;
   }, [location.pathname]);
   async function logout() {
+    if (intentionalLogout.current) return;
     intentionalLogout.current = true;
+    setIsLoggingOut(true);
     try {
       await api.logout();
       await client.cancelQueries();
@@ -122,6 +125,7 @@ export function Layout() {
       notify(errorMessage(error), "error");
     } finally {
       intentionalLogout.current = false;
+      setIsLoggingOut(false);
     }
   }
 
@@ -218,11 +222,13 @@ export function Layout() {
                   </Link>
                   <Button
                     onClick={() => void logout()}
-                    aria-label="Sign out"
+                    disabled={isLoggingOut}
+                    aria-busy={isLoggingOut}
+                    aria-label={isLoggingOut ? "Saindo…" : "Sign out"}
                     className="session-button"
                   >
                     <FigmaIcon name="home/imgLogout" />
-                    Sair
+                    {isLoggingOut ? "Saindo…" : "Sair"}
                   </Button>
                 </>
               ) : (
@@ -315,9 +321,14 @@ export function Layout() {
                   ))}
                 </div>
               </details>
-              <button className="account-signout" onClick={() => void logout()}>
+              <button
+                className="account-signout"
+                onClick={() => void logout()}
+                disabled={isLoggingOut}
+                aria-busy={isLoggingOut}
+              >
                 <AccountIcon name="logout" />
-                Sair
+                {isLoggingOut ? "Saindo…" : "Sair"}
               </button>
             </nav>
             <div className="account-content">
